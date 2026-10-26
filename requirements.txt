@@ -1,0 +1,4 @@
+# cyber-egg 只依赖 Python 标准库
+# 采集用 urllib，存储用 sqlite3，模板用字符串替换 —— 无需 pip install
+#
+# 要求 Python >= 3.10（代码中使用了 X | None 类型标注）

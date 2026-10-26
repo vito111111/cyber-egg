@@ -1,0 +1,30 @@
+# 运行时产物与缓存（不入库）
+.cache/
+data/
+
+# 看板产物：由 run.py 生成，GitHub Actions 直接部署到 Pages，
+# 不入库以免每天刷新产生大量无意义 diff。
+site/
+
+# 每日运行日志
+run-history.log
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 临时测试文件
+.t*.txt
+.tmp*
+*.bak
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

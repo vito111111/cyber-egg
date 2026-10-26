@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cyber-egg · logo 方案对比</title>
+<style>
+:root{
+  --bg:#f4f6f8;--card:#fff;--ink:#12161d;--ink2:#4b5260;--ink3:#8a93a3;
+  --line:#e3e7ee;--teal:#0d8b7f;--teal-d:#0a5b72;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);line-height:1.6;font-size:14px;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  padding:34px 24px 70px}
+.wrap{max-width:1200px;margin:0 auto}
+.kicker{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);
+  font-weight:750;margin-bottom:8px}
+h1{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.25}
+.sub{color:var(--ink3);font-size:13px;margin-top:8px;max-width:780px}
+
+/* ---- 顶部并排对比 ---- */
+.strip{background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:20px 24px;margin:24px 0;box-shadow:0 1px 3px rgba(16,24,40,.05)}
+.strip-t{font-size:11px;font-weight:700;color:var(--ink3);letter-spacing:.05em;
+  text-transform:uppercase;margin-bottom:16px}
+.strip-row{display:flex;gap:26px;flex-wrap:wrap}
+.strip-item{display:flex;flex-direction:column;align-items:center;gap:8px}
+.strip-item .lb{font-size:11px;font-weight:800;color:var(--ink3);letter-spacing:.04em}
+.strip-item.on .lb{color:var(--teal)}
+
+/* ---- 卡片网格 ---- */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:18px;display:flex;flex-direction:column;
+  box-shadow:0 1px 3px rgba(16,24,40,.05);transition:.2s}
+.card:hover{box-shadow:0 10px 28px rgba(16,24,40,.11);transform:translateY(-2px)}
+
+.head{display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.tag{width:23px;height:23px;border-radius:7px;background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0}
+.name{font-size:15px;font-weight:750;letter-spacing:-.01em}
+
+/* 展示台 */
+.stage{display:flex;align-items:center;gap:20px;border-radius:12px;padding:18px;
+  background:linear-gradient(160deg,#fbfdfd,#f2f7f8);border:1px solid #edf2f4;margin-bottom:14px}
+/* 图标容器：必须显式尺寸，否则内联 SVG 没有宽高会塌陷 */
+.ico{display:block;border-radius:9px;overflow:hidden;flex-shrink:0;
+  box-shadow:0 3px 12px rgba(13,139,127,.24)}
+.ico svg{display:block;width:100%;height:100%}
+
+.sizes{display:flex;flex-direction:column;gap:10px}
+.sz{display:flex;align-items:center;gap:8px}
+.sz .n{font-size:9.5px;color:#a3adba;font-family:ui-monospace,monospace;min-width:15px}
+/* 小尺寸不用阴影，改为极淡描边，便于看清真实形状 */
+.ico.flat{box-shadow:none;border:1px solid #e8eef0}
+
+.desc{font-size:12.5px;color:var(--ink2);line-height:1.65;flex:1}
+.verdict{margin-top:11px;padding-top:11px;border-top:1px dashed #e8ecf1;
+  font-size:11.5px;color:var(--ink3);line-height:1.6;
+  display:grid;grid-template-columns:34px 1fr;gap:3px 0}
+.verdict b{font-weight:700}
+.verdict .p{color:#0a8f5c}
+.verdict .c{color:#c0700c}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="kicker">cyber-egg · logo exploration</div>
+<h1>Logo 方案对比 · 六版</h1>
+<p class="sub">六个方向刻意拉开风格差异。每版都给 88px 大图与 31 / 20 / 16px 真实尺寸 ——
+请重点看 16px 那行，小尺寸糊掉的方案在浏览器标签页里会失效。</p>
+
+<div class="strip">
+  <div class="strip-t">真实头部尺寸（31px）并排</div>
+  <div class="strip-row">
+    __ROW__
+  </div>
+</div>
+
+<div class="grid">
+__CARDS__
+</div>
+
+</div>
+</body>
+</html>

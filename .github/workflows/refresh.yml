@@ -1,0 +1,72 @@
+name: Refresh dashboard
+
+on:
+  schedule:
+    # 08:30 Asia/Shanghai = 00:30 UTC
+    - cron: "30 0 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch and build
+        shell: pwsh
+        run: |
+          # Monday (1) syncs the free-model ranking; other days skip it.
+          $dow = (Get-Date).DayOfWeek.value__
+          $extra = if ($dow -eq 1) { "--sync-ranking" } else { "" }
+          Write-Host "weekday=$dow extra=$extra"
+          python run.py $extra
+
+      - name: Report summary
+        shell: pwsh
+        run: |
+          python -c @"
+          import json
+          d = json.load(open('site/data.json', encoding='utf-8'))
+          s, m = d['feed']['summary'], d['meta']
+          print(f\"providers={len(d['providers'])} cards={s['total']} live={s['live']} expired={s['expired']}\")
+          print(f\"tier1={s['tier1']} visual={s['multimodal']} coverage={d['library']['audit']['stats']['coverage_pct']}%\")
+          print(f\"sources_ok={m.get('sources_ok')}/{m.get('sources_total')}\")
+          "@
+
+      - name: Upload dashboard artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cyber-egg-site
+          path: site/
+          retention-days: 14
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/
+
+  deploy:
+    needs: refresh
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

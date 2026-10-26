@@ -1,0 +1,171 @@
+{
+  "_readme": "信息源配置。enabled=false 的源不会被抓取。kind=api/x/aggregator 的源在第二屏「库区」可单独启停与改 URL。",
+  "version": 2,
+  "updated": "2026-10-26",
+  "sources": [
+    {
+      "key": "intel_quotas",
+      "label": "free-llm-intel · 额度总表",
+      "group": "结构化数据",
+      "kind": "api",
+      "url": "https://free-llm-intel.aishort.top/feeds/quotas.json",
+      "mirrors": [],
+      "enabled": true,
+      "feeds_screen": 2,
+      "contributes": "70 家厂商的免费额度、有效期、免费模型、前置条件、限时活动",
+      "cadence": "上游每日 06:19 巡检",
+      "note": "国内厂商覆盖最好的中文源"
+    },
+    {
+      "key": "intel_changes",
+      "label": "free-llm-intel · 政策变化流",
+      "group": "结构化数据",
+      "kind": "api",
+      "url": "https://free-llm-intel.aishort.top/feeds/intel-changes.json",
+      "mirrors": [],
+      "enabled": true,
+      "feeds_screen": 1,
+      "contributes": "上游已核验的额度/活动变化，前值→后值",
+      "cadence": "上游每日",
+      "note": "第一屏「新活动」的直接素材"
+    },
+    {
+      "key": "intel_vendors",
+      "label": "free-llm-intel · 厂商 RSS 索引",
+      "group": "结构化数据",
+      "kind": "api",
+      "url": "https://free-llm-intel.aishort.top/feeds/vendors.json",
+      "mirrors": [],
+      "enabled": true,
+      "feeds_screen": 2,
+      "contributes": "35 家厂商的官方博客 RSS 地址",
+      "cadence": "上游每日",
+      "note": "用于追踪厂商官方公告动态"
+    },
+    {
+      "key": "paco_providers",
+      "label": "free-llm-api-hub · 结构化厂商库",
+      "group": "结构化数据",
+      "kind": "api",
+      "url": "https://raw.githubusercontent.com/pacocartones/free-llm-api-hub/main/data/providers.json",
+      "mirrors": [
+        "https://ghproxy.net/https://raw.githubusercontent.com/pacocartones/free-llm-api-hub/main/data/providers.json",
+        "https://gh-proxy.com/https://raw.githubusercontent.com/pacocartones/free-llm-api-hub/main/data/providers.json",
+        "https://cdn.jsdelivr.net/gh/pacocartones/free-llm-api-hub@main/data/providers.json"
+      ],
+      "enabled": true,
+      "feeds_screen": 2,
+      "contributes": "68 家的结构化布尔值：是否绑卡 / 是否需手机 / 可否商用 / 是否 OpenAI 兼容",
+      "cadence": "上游约每周",
+      "note": "海外厂商结构化程度最高的源"
+    },
+    {
+      "key": "claw_models",
+      "label": "free-ai-models · 免费模型榜",
+      "group": "结构化数据",
+      "kind": "api",
+      "url": "https://raw.githubusercontent.com/ClawLabsAI/free-ai-models/main/data/models.json",
+      "mirrors": [
+        "https://ghproxy.net/https://raw.githubusercontent.com/ClawLabsAI/free-ai-models/main/data/models.json",
+        "https://gh-proxy.com/https://raw.githubusercontent.com/ClawLabsAI/free-ai-models/main/data/models.json",
+        "https://cdn.jsdelivr.net/gh/ClawLabsAI/free-ai-models@main/data/models.json"
+      ],
+      "enabled": true,
+      "feeds_screen": 2,
+      "contributes": "免费模型的能力评分、上下文长度、限速、LMArena 分数",
+      "cadence": "上游每日 04:00 UTC",
+      "note": "排名同步的数据基础"
+    },
+    {
+      "key": "workbuddy_intl",
+      "label": "WorkBuddy 国际站 · 订阅政策",
+      "group": "官方文档",
+      "kind": "doc",
+      "url": "https://www.workbuddy.ai/docs/workbuddy/Subscription",
+      "mirrors": [],
+      "enabled": true,
+      "feeds_screen": 1,
+      "contributes": "国际版 Free 100 积分/月、活跃每日 30、注册送 250（14 天）",
+      "cadence": "人工复核（SPA 页面，纯抓取拿不到正文）",
+      "note": "页面为 SPA，脚本抓不到正文；事实来自人工核实，需定期复核"
+    },
+    {
+      "key": "workbuddy_cn",
+      "label": "WorkBuddy 国内站 · 公告",
+      "group": "官方文档",
+      "kind": "doc",
+      "url": "https://www.workbuddy.cn/announcement",
+      "mirrors": [],
+      "enabled": true,
+      "feeds_screen": 1,
+      "contributes": "国内版体验版额度、限免活动、教师版积分",
+      "cadence": "人工复核",
+      "note": "同上"
+    },
+    {
+      "key": "trae_pricing",
+      "label": "Trae · 定价页",
+      "group": "官方文档",
+      "kind": "doc",
+      "url": "https://www.trae.ai/pricing",
+      "mirrors": [],
+      "enabled": true,
+      "feeds_screen": 1,
+      "contributes": "国际版 Free / Pro 价格与首月优惠",
+      "cadence": "人工复核",
+      "note": "可抓到 Free/Pro 字样，但具体额度需人工读"
+    },
+    {
+      "key": "tingwu_equity",
+      "label": "通义听悟 · 权益页",
+      "group": "官方文档",
+      "kind": "doc",
+      "url": "https://tingwu.aliyun.com/equity/receive",
+      "mirrors": [],
+      "enabled": true,
+      "feeds_screen": 1,
+      "contributes": "每日登录 10 小时转写时长、绑云盘 50h、高校认证 500h",
+      "cadence": "人工复核",
+      "note": "官方权益页可直接点开核对"
+    },
+    {
+      "key": "x_thsottiaux",
+      "label": "X · @thsottiaux（OpenAI Tibo）",
+      "group": "社交账号",
+      "kind": "x",
+      "url": "https://x.com/thsottiaux",
+      "mirrors": [],
+      "enabled": true,
+      "probe": false,
+      "feeds_screen": 1,
+      "contributes": "OpenAI Codex / ChatGPT Work 用量重置公告、每日挑战进度",
+      "cadence": "人工复核",
+      "note": "本机网络环境下 X 全部端点不可达（SSL handshake 超时 / 代理 502），实测连 syndication 与 nitter 镜像也不通。默认不发起探测（probe=false）以免每轮白等 2 分钟；历史记录为人工核实归档。想验证可达性时显式加 --probe-x。",
+      "reachable": false,
+      "last_reachability_check": "2026-10-26"
+    },
+    {
+      "key": "x_zcode_ai",
+      "label": "X · @zcode_ai（智谱 ZCode）",
+      "group": "社交账号",
+      "kind": "x",
+      "url": "https://x.com/zcode_ai",
+      "mirrors": [],
+      "enabled": true,
+      "probe": false,
+      "feeds_screen": 1,
+      "contributes": "ZCode 限时送 token 活动的官方公告",
+      "cadence": "人工复核",
+      "note": "同上，默认不探测。",
+      "reachable": false,
+      "last_reachability_check": "2026-10-26"
+    }
+  ],
+  "fetch_policy": {
+    "timeout_seconds": 40,
+    "retries": 2,
+    "mirror_fallback": true,
+    "respect_disabled": true,
+    "note": "直连失败后按 mirrors 顺序回退；enabled=false 的源整轮跳过"
+  }
+}
