@@ -14,10 +14,11 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  # ── 采集与构建：这一环失败才是真失败 ──────────────────────────
   refresh:
     runs-on: windows-latest
     steps:
@@ -30,15 +31,15 @@ jobs:
       - name: Fetch and build
         shell: pwsh
         run: |
-          # Monday (1) syncs the free-model ranking; other days skip it.
+          # 周一（1）额外同步免费模型榜；其他日子跳过，省时间。
           $dow = (Get-Date).DayOfWeek.value__
           $extra = if ($dow -eq 1) { "--sync-ranking" } else { "" }
           Write-Host "weekday=$dow extra=$extra"
           python run.py $extra
 
-      # 摘要只是锦上添花，绝不能因为它失败就挡住部署。
-      # 历史教训：曾把 python 代码内联在本步骤里，PowerShell here-string
-      # 的终止符必须顶格，放进 YAML 缩进块里必然失效 → 整轮 workflow 变红。
+      # 摘要只是锦上添花，不能因为它失败就挡住产物上传。
+      # 教训：曾把 python 代码内联在本步骤里，PowerShell here-string 的
+      # 终止符 "@ 必须顶格，放进 YAML 缩进块必然失效 → 整轮变红。
       - name: Report summary
         continue-on-error: true
         shell: pwsh
@@ -51,21 +52,28 @@ jobs:
           path: site/
           retention-days: 14
 
-      - uses: actions/configure-pages@v5
-        with:
-          # 首次运行时尝试自动开启 Pages（免去手动去 Settings 点一次）
-          enablement: true
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: site/
-
-  deploy:
+  # ── 发布到 Pages：仓库未启用 Pages 时跳过，不算失败 ──────────
+  pages:
     needs: refresh
+    continue-on-error: true
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Download built site
+        uses: actions/download-artifact@v4
+        with:
+          name: cyber-egg-site
+          path: site
+
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
       - id: deployment
         uses: actions/deploy-pages@v4
