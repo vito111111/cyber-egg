@@ -36,17 +36,13 @@ jobs:
           Write-Host "weekday=$dow extra=$extra"
           python run.py $extra
 
+      # 摘要只是锦上添花，绝不能因为它失败就挡住部署。
+      # 历史教训：曾把 python 代码内联在本步骤里，PowerShell here-string
+      # 的终止符必须顶格，放进 YAML 缩进块里必然失效 → 整轮 workflow 变红。
       - name: Report summary
+        continue-on-error: true
         shell: pwsh
-        run: |
-          python -c @"
-          import json
-          d = json.load(open('site/data.json', encoding='utf-8'))
-          s, m = d['feed']['summary'], d['meta']
-          print(f\"providers={len(d['providers'])} cards={s['total']} live={s['live']} expired={s['expired']}\")
-          print(f\"tier1={s['tier1']} visual={s['multimodal']} coverage={d['library']['audit']['stats']['coverage_pct']}%\")
-          print(f\"sources_ok={m.get('sources_ok')}/{m.get('sources_total')}\")
-          "@
+        run: python scripts/report.py
 
       - name: Upload dashboard artifact
         uses: actions/upload-artifact@v4
@@ -56,6 +52,9 @@ jobs:
           retention-days: 14
 
       - uses: actions/configure-pages@v5
+        with:
+          # 首次运行时尝试自动开启 Pages（免去手动去 Settings 点一次）
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
