@@ -33,6 +33,15 @@ open site/index.html   # 双击也能打开，数据已内联，无需起服务
 
 `daily.cmd` 会自己找可用的 Python（先试 `py -3`，再试 `python`），不依赖硬编码路径。
 
+工作流分两个 job，边界很清楚：
+
+- **`refresh`** —— 采集 + 构建 + 上传产物。**这一环红才是真失败。**
+- **`pages`** —— 发布到 Pages。设了 `continue-on-error`，所以 Pages 没启用时会跳过，不会把整轮判成失败。
+
+> **fork 后需要手动开一次 Pages**：仓库 Pages 是仓库级设置，默认 `GITHUB_TOKEN`
+> 没有管理员权限，无法由工作流代开。到 Settings → Pages → Source 选 **GitHub Actions**
+> 即可，之后每次推送自动部署。
+
 ---
 
 ## lucky egg · 福利展示
